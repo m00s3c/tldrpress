@@ -60,12 +60,6 @@ Display a specific post summary:
 
 ---
 
-## Elementor & Gutenberg
-
-TLDRPress includes both a dedicated Elementor widget and Gutenberg block for flexible summary placement inside templates, posts, and layouts.
-
----
-
 ## Bulk Generation
 
 Generate summaries for existing posts using the built-in AJAX-powered bulk generation tool.
