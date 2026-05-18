@@ -19,8 +19,6 @@ Summaries are generated in the WordPress admin and stored permanently in post me
 - Editable saved summaries
 - Automatic frontend display with configurable placement
 - Manual display with shortcode support
-- Gutenberg block support
-- Elementor widget support
 - Responsive frontend summary box
 - Dark mode compatible styling
 
