@@ -36,7 +36,7 @@ Summaries are generated in the WordPress admin and stored permanently in post me
 
 1. Upload the plugin ZIP through **Plugins → Add New**
 2. Activate **TLDRPress**
-3. Add your OpenAI API key in **TLDRPress Settings**
+3. Add your OpenAI API key in **Settings → TLDRPress**
 4. Choose your preferred summary settings
 5. Start generating summaries
 
@@ -56,11 +56,13 @@ Display a specific post summary:
 [tldrpress id="123"]
 ```
 
+For custom placement, disable automatic frontend display in **Settings → TLDRPress**, then add `[tldrpress]` using the standard WordPress Shortcode block or your page builder's shortcode widget.
+
 ---
 
 ## Bulk Generation
 
-Generate summaries for existing posts using the built-in AJAX-powered bulk generation tool.
+Generate summaries for existing posts using the built-in AJAX-powered bulk generation tool under **Tools → TLDRPress**.
 
 ---
 
@@ -68,7 +70,7 @@ Generate summaries for existing posts using the built-in AJAX-powered bulk gener
 
 The frontend TL;DR box uses stable CSS classes for theme and builder overrides.
 
-You can add custom styling in your theme, WordPress Additional CSS, Elementor custom CSS, or a site-specific plugin.
+You can add custom styling in your theme, WordPress Additional CSS, page-builder custom CSS, or a site-specific plugin.
 
 ```css
 .tldrpress-box {}
@@ -135,6 +137,26 @@ You can add custom styling in your theme, WordPress Additional CSS, Elementor cu
   }
 }
 ```
+
+---
+
+## Changelog
+
+### 1.0.2
+
+- Removed the **Save Manually** button from the post editor meta box
+- Moved bulk generation to **Tools → TLDRPress**
+- Moved plugin settings to **Settings → TLDRPress**
+- Edited summaries continue to save with the standard WordPress post update action
+
+### 1.0.1
+
+- Removed the dedicated Gutenberg block and Elementor widget
+- Standardized custom placement around the `[tldrpress]` shortcode
+
+### 1.0.0
+
+- Initial release
 
 ---
 
