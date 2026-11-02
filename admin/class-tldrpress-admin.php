@@ -54,20 +54,20 @@ class TLDRPress_Admin {
 	 * @return void
 	 */
 	public function admin_menu() {
+		add_management_page(
+			__( 'TLDRPress Bulk Generate', 'tldrpress' ),
+			__( 'TLDRPress', 'tldrpress' ),
+			'manage_options',
+			'tldrpress-bulk-generate',
+			array( $this, 'render_bulk_page' )
+		);
+
 		add_options_page(
 			__( 'TLDRPress Settings', 'tldrpress' ),
 			__( 'TLDRPress', 'tldrpress' ),
 			'manage_options',
 			'tldrpress',
 			array( $this, 'render_settings_page' )
-		);
-
-		add_management_page(
-			__( 'Bulk Generate', 'tldrpress' ),
-			__( 'TLDRPress', 'tldrpress' ),
-			'manage_options',
-			'tldrpress-bulk-generate',
-			array( $this, 'render_bulk_page' )
 		);
 	}
 

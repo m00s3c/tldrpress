@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: TLDRPress
- * Plugin URI: https://github.com/m00s3c/tldrpress
+ * Plugin URI: https://tldrpress.dev
  * Description: Generate and display AI-powered TL;DR summaries for WordPress posts.
  * Version: 1.0.3
  * Author: webmaster.sh
