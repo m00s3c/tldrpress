@@ -1,5 +1,7 @@
 # TLDRPress
 
+Contributors: webmaster.sh
+
 TLDRPress is a lightweight WordPress plugin for generating AI-powered TL;DR summaries for blog posts, publishers, news sites, and editorial teams.
 
 Summaries are generated in the WordPress admin and stored permanently in post meta. The plugin never calls AI services during frontend page loads.
@@ -141,6 +143,10 @@ You can add custom styling in your theme, WordPress Additional CSS, page-builder
 ---
 
 ## Changelog
+
+### 1.0.3
+
+- Updated author to webmaster.sh and refreshed readme.
 
 ### 1.0.2
 
