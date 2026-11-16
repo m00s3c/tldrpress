@@ -144,6 +144,14 @@ You can add custom styling in your theme, WordPress Additional CSS, page-builder
 
 ## Changelog
 
+### 1.0.4
+
+- Store the OpenAI API key with the WordPress 7.2 Secrets API when that API is available.
+- Import an existing plaintext key and remove it from the settings option only after the import succeeds.
+- Keep the key in the settings option on older WordPress versions, and when `WP_SECRETS_KEY` is missing or not usable.
+- Leave the settings field empty so a saved key is never printed. Only a new value replaces it.
+- Show an admin notice when the secrets provider is read-only, when the stored key cannot be read, and when `WP_SECRETS_KEY` is missing on WordPress 7.2.
+
 ### 1.0.3
 
 - Updated author to webmaster.sh and refreshed readme.

@@ -39,6 +39,7 @@ class TLDRPress_Admin {
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_notices', array( $this, 'render_secret_notices' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
 		add_action( 'save_post_post', array( $this, 'save_post' ), 10, 2 );
 		add_action( 'transition_post_status', array( $this, 'maybe_auto_generate' ), 10, 3 );
@@ -357,6 +358,35 @@ class TLDRPress_Admin {
 	}
 
 	/**
+	 * Explain secrets storage problems without revealing the API key.
+	 *
+	 * @return void
+	 */
+	public function render_secret_notices() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( $this->settings->secrets_key_missing() ) {
+			echo '<div class="notice notice-warning"><p>';
+			echo esc_html__( 'TLDRPress cannot use the WordPress Secrets API because WP_SECRETS_KEY is missing. The OpenAI API key remains in the plugin settings. Define WP_SECRETS_KEY in wp-config.php to store it as a secret.', 'tldrpress' );
+			echo '</p></div>';
+		}
+
+		if ( $this->settings->secrets_api_available() && ! $this->settings->provider_is_writable() ) {
+			echo '<div class="notice notice-warning"><p>';
+			echo esc_html__( 'The secrets provider is read-only. TLDRPress will not write an OpenAI API key to the database.', 'tldrpress' );
+			echo '</p></div>';
+		}
+
+		if ( $this->settings->api_key_is_unreadable() ) {
+			echo '<div class="notice notice-error"><p>';
+			echo esc_html__( 'The OpenAI API key is stored but cannot be read right now. TLDRPress did not clear it and is not asking for a replacement.', 'tldrpress' );
+			echo '</p></div>';
+		}
+	}
+
+	/**
 	 * Render settings page.
 	 *
 	 * @return void
@@ -367,15 +397,29 @@ class TLDRPress_Admin {
 		}
 
 		$options = $this->settings->all();
+		unset( $options['api_key'] );
+		$api_key_mode = $this->settings->api_key_input_mode();
 		?>
 		<div class="wrap tldrpress-admin-page">
 			<h1><?php esc_html_e( 'TLDRPress Settings', 'tldrpress' ); ?></h1>
+			<?php settings_errors( TLDRPress_Settings::OPTION_NAME ); ?>
 			<form method="post" action="options.php">
 				<?php settings_fields( 'tldrpress_settings_group' ); ?>
 				<table class="form-table" role="presentation">
 					<tr>
 						<th scope="row"><label for="tldrpress_api_key"><?php esc_html_e( 'OpenAI API key', 'tldrpress' ); ?></label></th>
-						<td><input type="password" class="regular-text" id="tldrpress_api_key" name="<?php echo esc_attr( TLDRPress_Settings::OPTION_NAME ); ?>[api_key]" value="<?php echo esc_attr( $options['api_key'] ); ?>" autocomplete="off"></td>
+						<td>
+							<?php if ( 'locked' === $api_key_mode ) : ?>
+								<p class="description"><?php esc_html_e( 'The host manages this secret. TLDRPress cannot save a new OpenAI API key here.', 'tldrpress' ); ?></p>
+							<?php elseif ( 'unreadable' === $api_key_mode ) : ?>
+								<p class="description"><?php esc_html_e( 'The saved OpenAI API key cannot be read right now, so TLDRPress is not asking for a new one.', 'tldrpress' ); ?></p>
+							<?php else : ?>
+								<input type="password" class="regular-text" id="tldrpress_api_key" name="<?php echo esc_attr( TLDRPress_Settings::OPTION_NAME ); ?>[api_key]" value="" autocomplete="off"<?php echo 'saved' === $api_key_mode ? ' placeholder="' . esc_attr__( 'Key saved, leave blank to keep it', 'tldrpress' ) . '"' : ''; ?>>
+								<?php if ( 'saved' === $api_key_mode ) : ?>
+									<p class="description"><?php esc_html_e( 'Key saved, leave blank to keep it.', 'tldrpress' ); ?></p>
+								<?php endif; ?>
+							<?php endif; ?>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="tldrpress_model"><?php esc_html_e( 'Model', 'tldrpress' ); ?></label></th>
