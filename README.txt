@@ -4,7 +4,7 @@ Tags: ai, summaries, openai, tldr, posts
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,14 @@ When you generate a summary, the post content is sent to OpenAI for processing. 
 
 == Changelog ==
 
+= 1.0.4 =
+
+* Store the OpenAI API key with the WordPress 7.2 Secrets API when that API is available.
+* Import an existing plaintext key and remove it from the settings option only after the import succeeds.
+* Keep the key in the settings option on older WordPress versions, and when WP_SECRETS_KEY is missing or not usable.
+* Leave the settings field empty so a saved key is never printed. Only a new value replaces it.
+* Show an admin notice when the secrets provider is read-only, when the stored key cannot be read, and when WP_SECRETS_KEY is missing on WordPress 7.2.
+
 = 1.0.3 =
 
 * Updated author to webmaster.sh and refreshed readme.
@@ -141,6 +149,10 @@ When you generate a summary, the post content is sent to OpenAI for processing. 
 * Added REST API endpoint.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+
+On WordPress 7.2, define WP_SECRETS_KEY to store the OpenAI API key with the Secrets API. The settings field no longer displays the saved key.
 
 = 1.0.2 =
 

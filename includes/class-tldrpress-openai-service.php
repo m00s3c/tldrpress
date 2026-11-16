@@ -37,6 +37,10 @@ class TLDRPress_OpenAI_Service implements TLDRPress_AI_Provider_Interface {
 	 * @return string|WP_Error
 	 */
 	public function generate_summary( $content, array $args = array() ) {
+		if ( $this->settings->api_key_is_unreadable() ) {
+			return new WP_Error( 'tldrpress_unreadable_api_key', __( 'The OpenAI API key is stored but cannot be read right now.', 'tldrpress' ) );
+		}
+
 		$api_key = $this->settings->get( 'api_key' );
 
 		if ( empty( $api_key ) ) {
